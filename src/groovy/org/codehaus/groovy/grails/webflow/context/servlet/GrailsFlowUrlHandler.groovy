@@ -69,9 +69,9 @@ class GrailsFlowUrlHandler extends DefaultFlowUrlHandler implements ApplicationC
                 newParams[key] = entry.value
             }
         }
-
-        UrlCreator creator = holder.getReverseMapping(controllerName, flowId, newParams)
-        String actionName = flowId.substring(flowId.lastIndexOf('/')+1)
+		
+		String actionName = flowId.substring(flowId.lastIndexOf('/') + 1)
+		UrlCreator creator = holder.getReverseMapping(controllerName, actionName, newParams)
 
         String url = creator.createURL(controllerName, actionName, newParams, 'utf-8')
         return getValidFlowURL(request, url, flowExecutionKey)
