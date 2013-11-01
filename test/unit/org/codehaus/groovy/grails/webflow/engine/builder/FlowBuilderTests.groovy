@@ -2,11 +2,12 @@ package org.codehaus.groovy.grails.webflow.engine.builder
 
 import org.codehaus.groovy.grails.commons.spring.GrailsWebApplicationContext
 import org.springframework.binding.convert.service.DefaultConversionService
+import org.springframework.expression.spel.standard.SpelExpressionParser
 import org.springframework.webflow.definition.registry.FlowDefinitionRegistryImpl
 import org.springframework.webflow.engine.*
 import org.springframework.webflow.engine.builder.support.FlowBuilderServices
 import org.springframework.webflow.engine.support.ActionTransitionCriteria
-import org.springframework.webflow.expression.DefaultExpressionParserFactory
+import org.springframework.webflow.expression.spel.WebFlowSpringELExpressionParser
 import org.springframework.webflow.mvc.builder.MvcViewFactoryCreator
 
 class FlowBuilderTests extends GroovyTestCase{
@@ -20,7 +21,7 @@ class FlowBuilderTests extends GroovyTestCase{
         viewCreator.applicationContext = new GrailsWebApplicationContext()
         flowBuilderServices.viewFactoryCreator = viewCreator
         flowBuilderServices.conversionService = new DefaultConversionService()
-        flowBuilderServices.expressionParser = DefaultExpressionParserFactory.getExpressionParser()
+        flowBuilderServices.expressionParser = new WebFlowSpringELExpressionParser(new SpelExpressionParser(), flowBuilderServices.conversionService)
     }
 
     void tearDown() {

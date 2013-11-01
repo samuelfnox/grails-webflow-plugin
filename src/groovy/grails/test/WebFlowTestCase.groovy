@@ -20,6 +20,7 @@ import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
 import org.codehaus.groovy.grails.webflow.engine.builder.FlowBuilder
 import org.springframework.binding.convert.service.DefaultConversionService
 import org.springframework.context.ApplicationContext
+import org.springframework.expression.spel.standard.SpelExpressionParser
 import org.springframework.mock.web.MockHttpServletRequest
 import org.springframework.mock.web.MockHttpServletResponse
 import org.springframework.mock.web.MockServletContext
@@ -34,7 +35,7 @@ import org.springframework.webflow.definition.registry.FlowDefinitionRegistryImp
 import org.springframework.webflow.engine.builder.DefaultFlowHolder
 import org.springframework.webflow.engine.builder.FlowAssembler
 import org.springframework.webflow.engine.builder.support.FlowBuilderServices
-import org.springframework.webflow.expression.DefaultExpressionParserFactory
+import org.springframework.webflow.expression.spel.WebFlowSpringELExpressionParser
 import org.springframework.webflow.mvc.builder.MvcViewFactoryCreator
 import org.springframework.webflow.test.MockExternalContext
 import org.springframework.webflow.test.execution.AbstractFlowExecutionTests
@@ -91,7 +92,7 @@ abstract class WebFlowTestCase extends AbstractFlowExecutionTests {
     }
         flowBuilderServices.viewFactoryCreator = viewCreator
         flowBuilderServices.conversionService = new DefaultConversionService()
-        flowBuilderServices.expressionParser = DefaultExpressionParserFactory.getExpressionParser()
+        flowBuilderServices.expressionParser = new WebFlowSpringELExpressionParser(new SpelExpressionParser(), flowBuilderServices.conversionService)
     }
 
     protected void tearDown() {
