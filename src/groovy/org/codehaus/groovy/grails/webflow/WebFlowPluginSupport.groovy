@@ -26,6 +26,7 @@ import org.codehaus.groovy.grails.webflow.persistence.SessionAwareHibernateFlowE
 import org.codehaus.groovy.grails.webflow.scope.ScopeRegistrar
 import org.springframework.binding.convert.service.DefaultConversionService
 import org.springframework.context.ApplicationContext
+import org.springframework.expression.spel.standard.SpelExpressionParser
 import org.springframework.webflow.conversation.impl.SessionBindingConversationManager
 import org.springframework.webflow.core.collection.LocalAttributeMap
 import org.springframework.webflow.core.collection.MutableAttributeMap
@@ -40,7 +41,7 @@ import org.springframework.webflow.execution.FlowExecutionFactory
 import org.springframework.webflow.execution.factory.StaticFlowExecutionListenerLoader
 import org.springframework.webflow.execution.repository.impl.DefaultFlowExecutionRepository
 import org.springframework.webflow.execution.repository.snapshot.SerializedFlowExecutionSnapshotFactory
-import org.springframework.webflow.expression.DefaultExpressionParserFactory
+import org.springframework.webflow.expression.spel.WebFlowSpringELExpressionParser
 import org.springframework.webflow.mvc.builder.MvcViewFactoryCreator
 
 /**
@@ -61,13 +62,13 @@ class WebFlowPluginSupport {
             // run at slightly higher precedence
             order = Integer.MAX_VALUE - 1
         }
+        conversationService(DefaultConversionService)
+        sep(SpelExpressionParser)
+        expressionParser(WebFlowSpringELExpressionParser, sep ,conversationService)
 
         flowBuilderServices(FlowBuilderServices) {
-            conversionService = { DefaultConversionService dcs -> }
-            expressionParser = { bean ->
-                bean.beanClass = DefaultExpressionParserFactory
-                bean.factoryMethod = "getDefaultExpressionParser"
-            }
+            conversionService = conversationService
+            expressionParser =  expressionParser
             viewFactoryCreator = viewFactoryCreator
         }
 

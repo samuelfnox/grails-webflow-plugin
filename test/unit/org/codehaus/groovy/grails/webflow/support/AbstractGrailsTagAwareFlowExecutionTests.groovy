@@ -14,9 +14,10 @@ import org.codehaus.groovy.grails.web.pages.GroovyPagesUriService
 import org.codehaus.groovy.grails.web.servlet.GrailsApplicationAttributes
 import org.codehaus.groovy.runtime.InvokerHelper
 import org.springframework.context.support.StaticMessageSource
-
+import org.springframework.expression.spel.standard.SpelExpressionParser
 import org.springframework.web.context.WebApplicationContext
 import org.springframework.web.context.request.RequestContextHolder
+import org.springframework.webflow.expression.spel.WebFlowSpringELExpressionParser
 import org.springframework.webflow.test.execution.AbstractFlowExecutionTests
 import org.codehaus.groovy.grails.commons.spring.WebRuntimeSpringConfiguration
 import org.springframework.mock.web.MockHttpServletRequest
@@ -27,7 +28,6 @@ import javax.servlet.ServletContext
 import org.springframework.webflow.engine.builder.support.FlowBuilderServices
 import org.springframework.webflow.mvc.builder.MvcViewFactoryCreator
 import org.springframework.binding.convert.service.DefaultConversionService
-import org.springframework.webflow.expression.DefaultExpressionParserFactory
 import org.springframework.webflow.definition.registry.FlowDefinitionRegistryImpl
 import org.springframework.webflow.context.ExternalContext
 import org.springframework.webflow.context.servlet.ServletExternalContext
@@ -117,7 +117,7 @@ abstract class AbstractGrailsTagAwareFlowExecutionTests extends AbstractFlowExec
         viewCreator.applicationContext = appCtx
         flowBuilderServices.viewFactoryCreator = viewCreator
         flowBuilderServices.conversionService = new DefaultConversionService()
-        flowBuilderServices.expressionParser = DefaultExpressionParserFactory.getExpressionParser()
+        flowBuilderServices.expressionParser = new WebFlowSpringELExpressionParser(new SpelExpressionParser(), flowBuilderServices.conversionService)
 
         servletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, appCtx)
         mockManager.applicationContext = appCtx

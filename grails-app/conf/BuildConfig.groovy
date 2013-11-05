@@ -12,9 +12,9 @@ grails.project.dependency.resolution = {
     }
 
     dependencies {
-        compile('org.springframework.webflow:spring-webflow:2.0.8.RELEASE',
-                'org.springframework.webflow:spring-binding:2.0.8.RELEASE',
-                'org.springframework.webflow:spring-js:2.0.8.RELEASE') {
+        compile('org.springframework.webflow:spring-webflow:2.2.0.RELEASE',
+                'org.springframework.webflow:spring-binding:2.2.0.RELEASE',
+                'org.springframework.webflow:spring-js:2.2.0.RELEASE') {
             exclude group:"org.springframework", name:"spring-beans"
             exclude group:"org.springframework", name:"spring-context"
             exclude group:"org.springframework", name:"spring-core"
@@ -23,8 +23,6 @@ grails.project.dependency.resolution = {
             exclude group:"commons-logging", name:"commons-logging"
             transitive = false
         }
-
-        runtime 'ognl:ognl:2.7.3'
 
         compile('org.hibernate:hibernate-core:3.6.10.Final') {
             excludes 'ant', 'antlr', 'cglib', 'commons-collections', 'commons-logging', 'commons-logging-api',
