@@ -29,19 +29,12 @@ grails.project.dependency.resolution = {
             exclude group:"org.springframework", name:"spring-webmvc"
             exclude group:"commons-logging", name:"commons-logging"
             transitive = false
-        }
-
-        compile('org.hibernate:hibernate-core:3.6.10.Final') {
-            excludes 'ant', 'antlr', 'cglib', 'commons-collections', 'commons-logging', 'commons-logging-api',
-                     'dom4j', 'h2', 'hibernate-commons-annotations', 'hibernate-jpa-2.0-api',
-                     'hibernate-validator', 'javassist', 'jaxb-api', 'jaxb-impl', 'jboss-jacc-api_JDK4',
-                     'jcl-over-slf4j', 'jta', 'junit', 'slf4j-api', 'slf4j-log4j12', 'validation-api'
-        }
-   
+        }  
 
     }
 
     plugins {
+        optional ":hibernate4:4.3.5.3"
         build(":release:3.0.1", ':rest-client-builder:2.0.1') {
             export = false
         }
