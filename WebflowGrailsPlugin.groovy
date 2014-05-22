@@ -4,12 +4,12 @@ class WebflowGrailsPlugin {
     def version = "2.1.0"
     def observe = ['controllers']
     def loadAfter = ['hibernate']
-    def grailsVersion = "2.2 > *"
+    def grailsVersion = "2.4 > *"
     def author = "Graeme Rocher"
     def authorEmail = "graeme.rocher@springsource.com"
     def title = "Spring Web Flow Plugin"
     def description = 'Integrates Spring Web Flow with Grails'
-    def documentation = "http://grails.org/doc/latest/guide/theWebLayer.html#webflow"
+    def documentation = "http://grails-plugins.github.io/grails-webflow-plugin/"
 
     def license = "APACHE"
     def organization = [name: 'SpringSource', url: 'http://www.springsource.org/']
