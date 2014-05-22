@@ -12,7 +12,7 @@ class WebflowGrailsPlugin {
     def documentation = "http://grails-plugins.github.io/grails-webflow-plugin/"
 
     def license = "APACHE"
-    def organization = [name: 'SpringSource', url: 'http://www.springsource.org/']
+    def organization = [name: 'Pivotal', url: 'http://www.gopivotal.com/oss/']
     def issueManagement = [system: 'JIRA', url: 'http://jira.grails.org/browse/GPWEBFLOW']
     def scm = [url: 'https://github.com/grails-plugins/grails-webflow-plugin']
 
