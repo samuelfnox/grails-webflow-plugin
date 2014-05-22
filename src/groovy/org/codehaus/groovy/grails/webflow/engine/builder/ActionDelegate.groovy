@@ -18,10 +18,10 @@ import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.codehaus.groovy.grails.commons.GrailsClassUtils
 import org.codehaus.groovy.grails.commons.TagLibArtefactHandler
 import org.codehaus.groovy.grails.web.pages.GroovyPage
-import org.codehaus.groovy.grails.web.plugins.support.WebMetaUtils
 import org.springframework.webflow.core.collection.LocalAttributeMap
 import org.springframework.webflow.execution.Action
 import org.springframework.webflow.execution.RequestContext
+import org.codehaus.groovy.grails.web.util.TagLibraryMetaUtils
 
 /**
  * Acts as a delegate to a flow action.
@@ -56,7 +56,7 @@ class ActionDelegate extends AbstractDelegate {
             TagLibArtefactHandler.TYPE, tagName.toString())
 
         if (tagLibraryClass) {
-            WebMetaUtils.registerMethodMissingForTags(ActionDelegate.metaClass, applicationContext, tagLibraryClass, name)
+            TagLibraryMetaUtils.registerMethodMissingForTags(ActionDelegate.metaClass, applicationContext, tagLibraryClass, name)
             return invokeMethod(name, args)
         }
 

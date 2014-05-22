@@ -15,6 +15,8 @@
 package org.codehaus.groovy.grails.webflow.engine.builder
 
 import grails.util.GrailsNameUtils
+import org.springframework.binding.convert.ConversionService
+import org.springframework.binding.expression.ExpressionParser
 
 import java.beans.PropertyDescriptor
 
@@ -46,6 +48,7 @@ import org.springframework.webflow.execution.Action
 import org.springframework.webflow.execution.Event
 import org.springframework.webflow.execution.ViewFactory
 
+import groovy.transform.*
 /**
 * <p>A builder implementation used to construct Spring Webflows. This is a DSL specifically
 *   designed to allow the construction of complex flows and is integrated into Grails'
@@ -346,12 +349,18 @@ class FlowBuilder extends AbstractFlowBuilder implements GroovyObject, Applicati
         }
     }
 
+    @CompileStatic
     protected ViewFactory createViewFactory(String viewId) {
-        ViewFactory viewFactory = flowBuilderServices.getViewFactoryCreator().createViewFactory(
-            new StaticExpression(viewId),
-            flowBuilderServices.getExpressionParser(),
-            flowBuilderServices.getConversionService(),
-            null)
+        ExpressionParser expressionParser = flowBuilderServices.getExpressionParser()
+        ConversionService conversionService = flowBuilderServices.getConversionService()
+
+        def expression = new StaticExpression(viewId)
+
+        def viewFactoryCreator = flowBuilderServices.getViewFactoryCreator()
+        ViewFactory viewFactory = viewFactoryCreator.createViewFactory(
+                expression,
+                expressionParser,
+                conversionService,null,null)
         return viewFactory
     }
 

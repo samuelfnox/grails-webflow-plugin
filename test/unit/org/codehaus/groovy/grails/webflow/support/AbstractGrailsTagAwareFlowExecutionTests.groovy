@@ -38,7 +38,6 @@ import org.springframework.webflow.engine.builder.FlowAssembler
 import org.springframework.webflow.definition.registry.FlowDefinitionRegistry
 import org.springframework.webflow.engine.builder.DefaultFlowHolder
 import org.springframework.webflow.definition.registry.FlowDefinitionLocator
-
 /**
  * @author Graeme Rocher
  * @since 0.4
@@ -62,6 +61,8 @@ abstract class AbstractGrailsTagAwareFlowExecutionTests extends AbstractFlowExec
     StaticMessageSource messageSource
 
     final void setUp() throws Exception {
+        GroovySystem.metaClassRegistry.removeMetaClass(String)
+
         originalHandler =     GroovySystem.metaClassRegistry.metaClassCreationHandle
 
         GroovySystem.metaClassRegistry.metaClassCreationHandle = new ExpandoMetaClassCreationHandle()
@@ -109,6 +110,8 @@ abstract class AbstractGrailsTagAwareFlowExecutionTests extends AbstractFlowExec
         dependentPlugins*.doWithRuntimeConfiguration(springConfig)
 
         appCtx = springConfig.getApplicationContext()
+        String.metaClass.encodeAsHTML = {-> delegate }
+
         grailsApplication.mainContext = appCtx
 
         flowBuilderServices = new FlowBuilderServices()

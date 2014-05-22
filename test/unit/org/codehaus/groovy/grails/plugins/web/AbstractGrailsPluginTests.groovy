@@ -13,7 +13,7 @@ import org.codehaus.groovy.grails.commons.spring.GrailsRuntimeConfigurator
 import org.codehaus.groovy.grails.commons.spring.WebRuntimeSpringConfiguration
 import org.codehaus.groovy.grails.plugins.DefaultGrailsPlugin
 import org.codehaus.groovy.grails.plugins.MockGrailsPluginManager
-import org.codehaus.groovy.grails.plugins.PluginManagerHolder
+import grails.util.Holders
 import org.codehaus.groovy.grails.support.MockApplicationContext
 import org.codehaus.groovy.grails.support.MockResourceLoader
 import org.codehaus.groovy.grails.web.servlet.GrailsApplicationAttributes
@@ -84,6 +84,6 @@ abstract class AbstractGrailsPluginTests extends GroovyTestCase {
     protected final void tearDown() {
         pluginsToLoad = []
         ExpandoMetaClass.disableGlobally()
-        PluginManagerHolder.setPluginManager null
+        Holders.setPluginManager null
     }
 }

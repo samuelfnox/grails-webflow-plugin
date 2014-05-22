@@ -1,5 +1,6 @@
 grails.project.work.dir = 'target'
 
+grails.project.dependency.resolver = "maven"
 grails.project.dependency.resolution = {
 
     inherits "global"
@@ -12,9 +13,10 @@ grails.project.dependency.resolution = {
     }
 
     dependencies {
-        compile('org.springframework.webflow:spring-webflow:2.2.0.RELEASE',
-                'org.springframework.webflow:spring-binding:2.2.0.RELEASE',
-                'org.springframework.webflow:spring-js:2.2.0.RELEASE') {
+        compile 'org.grails:grails-web-databinding-spring:2.4.0'
+        compile('org.springframework.webflow:spring-webflow:2.3.3.RELEASE',
+                'org.springframework.webflow:spring-binding:2.3.3.RELEASE',
+                'org.springframework.webflow:spring-js:2.3.3.RELEASE') {
             exclude group:"org.springframework", name:"spring-beans"
             exclude group:"org.springframework", name:"spring-context"
             exclude group:"org.springframework", name:"spring-core"
@@ -31,18 +33,11 @@ grails.project.dependency.resolution = {
                      'jcl-over-slf4j', 'jta', 'junit', 'slf4j-api', 'slf4j-log4j12', 'validation-api'
         }
    
-        compile('dom4j:dom4j:1.6.1') {
-            excludes 'jaxen', 'jaxme-api', 'junitperf', 'pull-parser', 'relaxngDatatype',
-                     'stax-api', 'stax-ri', 'xalan', 'xercesImpl', 'xml-apis', 'xpp3', 'xsdlib'
-        }
-   
-        compile('org.hibernate:hibernate-commons-annotations:3.2.0.Final') {
-            excludes 'commons-logging', 'commons-logging-api', 'jcl-over-slf4j', 'junit', 'slf4j-api', 'slf4j-log4j12'
-        }
+
     }
 
     plugins {
-        build(":release:2.2.1", ':rest-client-builder:1.0.3') {
+        build(":release:3.0.1", ':rest-client-builder:2.0.1') {
             export = false
         }
     }

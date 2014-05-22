@@ -14,6 +14,9 @@ class FlowTagInvokationTests extends AbstractGrailsTagAwareFlowExecutionTests {
 
     void testRegularTagInvokation() {
         request[GrailsApplicationAttributes.CONTROLLER] = ga.getControllerClass("TestController").newInstance()
+
+        String.metaClass.encodeAsHTML = {-> delegate }
+
         startFlow()
         signalEvent('two')
 
@@ -23,6 +26,9 @@ class FlowTagInvokationTests extends AbstractGrailsTagAwareFlowExecutionTests {
     }
 
     void testNamespacedTagInvokation() {
+
+        String.metaClass.encodeAsHTML = {-> delegate }
+
         startFlow()
         signalEvent('three')
 
