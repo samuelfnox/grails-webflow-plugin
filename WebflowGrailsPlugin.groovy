@@ -3,7 +3,7 @@ import org.codehaus.groovy.grails.webflow.WebFlowPluginSupport
 class WebflowGrailsPlugin {
     def version = "2.1.0-SNAPSHOT"
     def observe = ['controllers']
-    def loadAfter = ['hibernate']
+    def loadAfter = ['hibernate','hibernate4']
     def grailsVersion = "2.4 > *"
     def author = "Graeme Rocher"
     def authorEmail = "graeme.rocher@springsource.com"
