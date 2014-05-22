@@ -2,7 +2,7 @@ package grails.test.mixin
 
 import grails.persistence.Entity
 import grails.test.mixin.domain.DomainClassUnitTestMixin
-import grails.test.mixin.webflow.WebFlowUnitTestMixin
+import grails.webflow.test.mixin.WebFlowUnitTestMixin
 
 import org.junit.Test
 
