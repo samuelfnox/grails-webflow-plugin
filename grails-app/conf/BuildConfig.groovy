@@ -19,16 +19,14 @@ grails.project.dependency.resolution = {
 
     dependencies {
         compile 'org.grails:grails-web-databinding-spring:2.4.0'
-        compile('org.springframework.webflow:spring-webflow:2.3.3.RELEASE',
-                'org.springframework.webflow:spring-binding:2.3.3.RELEASE',
-                'org.springframework.webflow:spring-js:2.3.3.RELEASE') {
+        compile('org.springframework.webflow:spring-webflow:2.3.3.RELEASE') {
             exclude group:"org.springframework", name:"spring-beans"
+            exclude group:"org.springframework", name:"spring-expression"
             exclude group:"org.springframework", name:"spring-context"
             exclude group:"org.springframework", name:"spring-core"
             exclude group:"org.springframework", name:"spring-web"
             exclude group:"org.springframework", name:"spring-webmvc"
             exclude group:"commons-logging", name:"commons-logging"
-            transitive = false
         }  
 
     }
