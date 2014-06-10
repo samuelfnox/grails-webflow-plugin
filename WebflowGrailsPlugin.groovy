@@ -6,7 +6,7 @@ class WebflowGrailsPlugin {
     def loadAfter = ['hibernate','hibernate4']
     def grailsVersion = "2.4 > *"
     def author = "Graeme Rocher"
-    def authorEmail = "graeme.rocher@springsource.com"
+    def authorEmail = "grocher@gopivotal.com"
     def title = "Spring Web Flow Plugin"
     def description = 'Integrates Spring Web Flow with Grails'
     def documentation = "http://grails-plugins.github.io/grails-webflow-plugin/"
