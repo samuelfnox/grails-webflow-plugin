@@ -360,7 +360,7 @@ class FlowBuilder extends AbstractFlowBuilder implements GroovyObject, Applicati
         ViewFactory viewFactory = viewFactoryCreator.createViewFactory(
                 expression,
                 expressionParser,
-                conversionService,null,null)
+                conversionService,null,null, null)
         return viewFactory
     }
 
