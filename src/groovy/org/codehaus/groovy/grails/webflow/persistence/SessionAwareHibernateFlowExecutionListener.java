@@ -18,7 +18,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.orm.hibernate3.SessionHolder;
+import org.springframework.orm.hibernate4.SessionHolder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.webflow.core.collection.AttributeMap;
@@ -27,6 +27,7 @@ import org.springframework.webflow.definition.FlowDefinition;
 import org.springframework.webflow.execution.FlowSession;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.persistence.HibernateFlowExecutionListener;
+import org.springframework.util.ClassUtils;
 
 /**
  * Extends the HibernateFlowExecutionListener and doesn't bind a session if one is already present.
@@ -35,6 +36,8 @@ import org.springframework.webflow.persistence.HibernateFlowExecutionListener;
  * @since 1.0
  */
 public class SessionAwareHibernateFlowExecutionListener extends HibernateFlowExecutionListener {
+
+    private static final boolean hibernate3Present = ClassUtils.isPresent("org.hibernate.connection.ConnectionProvider", HibernateFlowExecutionListener.class.getClassLoader());
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -117,9 +120,14 @@ public class SessionAwareHibernateFlowExecutionListener extends HibernateFlowExe
             return;
         }
 
-        SessionHolder sessionHolder = (SessionHolder) TransactionSynchronizationManager.getResource(localSessionFactory);
-        if (sessionHolder != null) {
-            flowScope.put(PERSISTENCE_CONTEXT_ATTRIBUTE, sessionHolder.getSession());
-        }
+        Session session = null;
+        if (hibernate3Present) {
+            org.springframework.orm.hibernate3.SessionHolder sessionHolder = (org.springframework.orm.hibernate3.SessionHolder) TransactionSynchronizationManager.getResource(localSessionFactory);
+            if (sessionHolder != null) session = sessionHolder.getSession();
+        } else {
+            SessionHolder sessionHolder = (SessionHolder) TransactionSynchronizationManager.getResource(localSessionFactory);  
+             if (sessionHolder != null) session = sessionHolder.getSession();
+       }
+       flowScope.put(PERSISTENCE_CONTEXT_ATTRIBUTE, session);
     }
 }
