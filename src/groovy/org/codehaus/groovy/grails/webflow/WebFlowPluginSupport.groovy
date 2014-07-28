@@ -78,7 +78,7 @@ class WebFlowPluginSupport {
         boolean configureHibernateListener = springConfig.containsBean("sessionFactory")
         if (configureHibernateListener) {
             try {
-                hibernateConversationListener(org.springframework.webflow.persistence.HibernateFlowExecutionListener, sessionFactory, transactionManager)
+                hibernateConversationListener(org.codehaus.groovy.grails.webflow.persistence.SessionAwareHibernateFlowExecutionListener, sessionFactory, transactionManager)
                 executionListenerLoader(org.springframework.webflow.execution.factory.StaticFlowExecutionListenerLoader, hibernateConversationListener)
             }
             catch (MissingPropertyException mpe) {
