@@ -1,8 +1,7 @@
-introduction: 
-    title: Introduction
-    startAndEndStates: Start and End States
-    actionStatesAndViewStates: Action States and View States
-    flowExecutionEvents: Flow Execution Events
-    flowScopes: Flow Scopes
-    dataBindingAndValidation: Data Binding and Validation
-    subflowsAndConversations: Subflows and Conversations
+introduction: Introduction
+startAndEndStates: Start and End States
+actionStatesAndViewStates: Action States and View States
+flowExecutionEvents: Flow Execution Events
+flowScopes: Flow Scopes
+dataBindingAndValidation: Data Binding and Validation
+subflowsAndConversations: Subflows and Conversations
