@@ -139,6 +139,13 @@ class FlowBuilder extends AbstractFlowBuilder implements GroovyObject, Applicati
                 }
                 else if ("input" == name) {
                     flow.inputMapper = new InputMapper(args[0])
+                } else if ("globalTransitions" == name) {
+                    GlobalTransitionCapturer transitionCapturer = new GlobalTransitionCapturer(this, applicationContext)
+                    Closure c = args[0]
+                    c.delegate = transitionCapturer
+                    c.resolveStrategy = Closure.DELEGATE_FIRST
+                    c.call()
+                    getFlow().globalTransitionSet.addAll(transitionCapturer.globalTransitions)
                 }
                 else {
                     FlowInfoCapturer flowInfo = new FlowInfoCapturer(this, applicationContext)
@@ -408,6 +415,45 @@ class FlowBuilder extends AbstractFlowBuilder implements GroovyObject, Applicati
     void buildStates() throws FlowBuilderException {
         flow(this.flowClosure)
     }
+}
+
+/**
+ * Used to capture global transitions
+ */
+class GlobalTransitionCapturer {
+
+    private FlowBuilder builder
+    private ApplicationContext applicationContext
+    List exceptionHandlers = []
+
+    private List globalTransitions = []
+
+    GlobalTransitionCapturer(FlowBuilder builder, ApplicationContext applicationContext) {
+        this.builder = builder
+        this.applicationContext = applicationContext
+    }
+
+    TransitionTo on(String name) {
+        return new TransitionTo(name, builder, globalTransitions, exceptionHandlers)
+    }
+
+    TransitionTo on(String name, Closure transitionCriteria) {
+        def transitionCriteriaAction = new ClosureInvokingAction(transitionCriteria)
+        return new TransitionTo(name, builder, globalTransitions, exceptionHandlers, transitionCriteriaAction)
+    }
+
+    TransitionTo on(Class exception) {
+        if (!Throwable.isAssignableFrom(exception)) {
+            throw new FlowDefinitionException("Event handler in flow [" + getFlowId() +
+                    "] passed a class which is not a instance of java.lang.Throwable")
+        }
+        return new TransitionTo(exception, builder, globalTransitions, exceptionHandlers)
+    }
+
+    Transition[] getGlobalTransitions() {
+        return globalTransitions.toArray(new Transition[globalTransitions.size()])
+    }
+
 }
 
 /**
